@@ -5,19 +5,19 @@ import (
 	"container/heap"
 )
 
-type kv struct {
+type KeyValue struct {
 	key string
 	val int
 }
 
-type KVHeap []kv
+type KVHeap []KeyValue
 
 func (h KVHeap) Len() int           { return len(h) }
 func (h KVHeap) Less(i, j int) bool { return h[i].val > h[j].val }
 func (h KVHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
 func (h *KVHeap) Push(x interface{}) {
-	*h = append(*h, x.(kv))
+	*h = append(*h, x.(KeyValue))
 }
 
 func (h *KVHeap) Pop() interface{} {
@@ -29,11 +29,11 @@ func (h *KVHeap) Pop() interface{} {
 }
 
 // getHeap returns heap of map
-func getHeap(m map[string]int) *KVHeap {
+func GetHeap(m map[string]int) *KVHeap {
 	h := &KVHeap{}
 	heap.Init(h)
 	for k, v := range m {
-		heap.Push(h, kv{k, v})
+		heap.Push(h, KeyValue{k, v})
 	}
 	return h
 }
