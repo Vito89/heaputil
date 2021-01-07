@@ -12,6 +12,7 @@ type KeyValue struct {
 
 type KVHeap []KeyValue
 
+// override section
 func (h KVHeap) Len() int           { return len(h) }
 func (h KVHeap) Less(i, j int) bool { return h[i].val > h[j].val }
 func (h KVHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
@@ -26,6 +27,13 @@ func (h *KVHeap) Pop() interface{} {
 	x := old[n-1]
 	*h = old[0 : n-1]
 	return x
+}
+// override section end
+
+// heapPop returns obj after pop on the heap
+func (h *KVHeap) HeapPop() KeyValue {
+	gotEntry := heap.Pop(h)
+    return KeyValue {gotEntry.(KeyValue).key, gotEntry.(KeyValue).val}
 }
 
 // getHeap returns heap of map
